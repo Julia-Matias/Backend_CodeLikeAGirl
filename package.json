@@ -4,6 +4,7 @@
   "description": "Desafio Bootcamp Code Like a Girl - Trilha Fullstack",
   "main": "index.js",
   "scripts": {
+    "start": "tsc && node dist/server.js",
     "dev": "ts-node-dev --respawn --inspect --ignore-watch node_modules src/server.ts",
     "lint:fix": "eslint . --fix"
   },
