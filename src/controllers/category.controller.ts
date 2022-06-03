@@ -34,7 +34,7 @@ export class CategoryController {
   }
 
   async getById({ params }: Request, response: Response) {
-    const categories = this.categoryService.getById(params.id);
+    const categories = await this.categoryService.getById(params.id);
     return response.status(HttpStatus.OK).json(categories);
   }
 
