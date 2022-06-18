@@ -7,6 +7,7 @@ import { HttpException } from '../handler-exceptions/http-exception.provider';
 import { HttpStatus } from '../utils/enums/http-status.enum';
 import { unlink } from 'fs';
 import { resolve } from 'path';
+import { param } from 'express-validator';
 
 export class ProductService {
   private productRepository: Repository<ProductEntity>;
@@ -74,6 +75,27 @@ export class ProductService {
         );
       }
       return new CreatedProductDto(product);
+    } catch (error) {
+      throw new HttpException(
+        'Erro ao listar produto. Tente novamente!',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  async getByCategoryName(name: string): Promise<CreatedProductDto[]> {
+    try {
+      const products = await this.productRepository.find({
+        relations: ['category'],
+        where: { category: { name } },
+      });
+      if (!products) {
+        throw new HttpException(
+          'Produto não encontrado. Tente novamente!',
+          HttpStatus.NOT_FOUND,
+        );
+      }
+      return products.map((product) => new CreatedProductDto(product));
     } catch (error) {
       throw new HttpException(
         'Erro ao listar produto. Tente novamente!',

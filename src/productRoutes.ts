@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction, Router } from 'express';
+import { Request, Response, NextFunction, Router, request } from 'express';
 import multer from 'multer';
 import { AppDataSource } from './config/data-source';
 import { multerConfig } from './config/multer';
@@ -43,6 +43,17 @@ productRoutes.get(
   },
 );
 
+productRoutes.get(
+  '/products/:name',
+  (request: Request, response: Response, next: NextFunction) => {
+    productController
+      .getByCategoryName(request, response)
+      .catch((error: Error) => {
+        next(error);
+      });
+  },
+);
+
 productRoutes.delete(
   '/products/:id',
   (request: Request, response: Response, next: NextFunction) => {
@@ -59,6 +70,15 @@ productRoutes.put(
   validator,
   (request: Request, response: Response, next: NextFunction) => {
     productController.update(request, response).catch((error: Error) => {
+      next(error);
+    });
+  },
+);
+
+productRoutes.get(
+  '/products/img/:name',
+  (request: Request, response: Response, next: NextFunction) => {
+    productController.getImgByName(request, response).catch((error: Error) => {
       next(error);
     });
   },
