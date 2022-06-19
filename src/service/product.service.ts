@@ -7,7 +7,6 @@ import { HttpException } from '../handler-exceptions/http-exception.provider';
 import { HttpStatus } from '../utils/enums/http-status.enum';
 import { unlink } from 'fs';
 import { resolve } from 'path';
-import { param } from 'express-validator';
 
 export class ProductService {
   private productRepository: Repository<ProductEntity>;
