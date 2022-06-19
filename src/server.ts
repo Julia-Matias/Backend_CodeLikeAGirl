@@ -1,12 +1,13 @@
 import express from 'express';
-import { categoryRoutes } from './categoryRoutes';
-import { AppDataSource } from './config/data-source';
-import { env } from './config/environment-variables';
-import { productRoutes } from './productRoutes';
 import cors from 'cors';
 import fs from 'fs';
 import { resolve } from 'path';
-import { HttpStatus } from './utils/enums/http-status.enum';
+
+import { AppDataSource } from './config/data-source';
+import { env } from './config/environment-variables';
+
+import { productRoutes } from './productRoutes';
+import { categoryRoutes } from './categoryRoutes';
 
 const directory = resolve(__dirname, '..', 'dist', 'uploads');
 fs.rmSync(directory, { force: true });
@@ -14,8 +15,6 @@ fs.mkdirSync(directory);
 
 const app = express();
 app.use(express.json());
-app.use([categoryRoutes, productRoutes]);
-
 app.use(
   cors({
     origin: '*',
@@ -23,13 +22,7 @@ app.use(
   }),
 );
 
-app.get('/status', (request, response) => {
-  return response.json({
-    status: HttpStatus.OK,
-    hotname: request.hostname,
-    ip: request.ip,
-  });
-});
+app.use([categoryRoutes, productRoutes]);
 
 const PORT = env.PORT || 3000;
 AppDataSource.initialize()

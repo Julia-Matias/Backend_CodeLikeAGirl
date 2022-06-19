@@ -6,7 +6,7 @@ import { HttpException } from '../../handler-exceptions/http-exception.provider'
 import { HttpStatus } from '../../utils/enums/http-status.enum';
 import { env } from '../environment-variables';
 
-const directory = resolve(__dirname, '..', '..', 'uploads');
+const directory = resolve(__dirname, '..', '..','uploads');
 
 const storageTypes: Record<string, any> = {
   local: diskStorage({
