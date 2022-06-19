@@ -16,9 +16,4 @@ export const AppDataSource = new DataSource({
       ? 'src/entities/**/*.entity.ts'
       : 'dist/entities/**/*.entity.js',
   ],
-  extra: {
-    ssl: {
-      rejectUnauthorized: false,
-    },
-  },
 });
